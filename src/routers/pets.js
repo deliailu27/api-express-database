@@ -2,15 +2,18 @@ const express = require("express");
 const router = express.Router();
 const db = require("../../db");
 
+const { getAll, getbyID, createNewEntry } = require("../domain/routerMethods");
+
 router.get("/", async (req, res) => {
-  let sqlQuery = "select * from pets";
-  const params = [];
-  if (req.query.type) {
-    sqlQuery += " WHERE type = $1";
-    params.push(req.query.type);
-  }
-  const qResult = await db.query(sqlQuery, params);
-  res.json({ pets: qResult.rows });
+  getAll("pets", req, res);
+});
+
+router.get("/:id", async (req, res) => {
+  getbyID("pets", req.params.id, req, res);
+});
+
+router.post("/", async (req, res) => {
+  createNewEntry("pets", req, res);
 });
 
 module.exports = router;
