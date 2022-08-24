@@ -19,10 +19,11 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  const sqlQuery = `select * from books while id = ${req.params.id}`;
+  const sqlQuery = `select * from books where id = ${req.params.id}`;
   console.log("query:", sqlQuery);
   const result = await db.query(sqlQuery);
-  res.json(result);
+  console.log("result:", result);
+  res.json(result.rows);
 });
 
 router.post("/", async (req, res) => {
