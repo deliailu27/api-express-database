@@ -6,4 +6,13 @@ function buildWhereClause(sql, columns, constraint = "AND") {
   return sql + mappedCols.join(`${constraint}`);
 }
 
-module.exports = { buildWhereClause };
+function selector(table, id) {
+  let sql = `select * from ${table}`;
+  if (id) {
+    sql += ` where id =${id}`;
+  }
+
+  return sql;
+}
+
+module.exports = { selector };
