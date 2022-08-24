@@ -35,4 +35,12 @@ router.post("/", async (req, res) => {
   res.status(201).json(newBook);
 });
 
+router.delete("/:id", async (req, res) => {
+  const bookToDeleteSql = `select * from books where id =${req.params.id}`;
+  const sqlQuery = `delete from books where id=${req.params.id}`;
+  const result = await db.query(bookToDeleteSql);
+  res.status(201).json(result.rows);
+  db.query(sqlQuery);
+});
+
 module.exports = router;
