@@ -4,7 +4,12 @@ const router = express.Router();
 const db = require("../../db");
 const { response } = require("../server");
 
-const { getAll, getbyID, createNewEntry } = require("../domain/routerMethods");
+const {
+  getAll,
+  getbyID,
+  createNewEntry,
+  deleteEntry,
+} = require("../domain/routerMethods");
 
 router.get("/", async (req, res) => {
   getAll("books", req, res);
@@ -19,11 +24,7 @@ router.post("/", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
-  const bookToDeleteSql = `select * from books where id =${req.params.id}`;
-  const sqlQuery = `delete from books where id=${req.params.id}`;
-  const result = await db.query(bookToDeleteSql);
-  res.status(201).json(result.rows);
-  db.query(sqlQuery);
+  deleteEntry("books", req, res);
 });
 
 module.exports = router;

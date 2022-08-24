@@ -2,7 +2,12 @@ const express = require("express");
 const router = express.Router();
 const db = require("../../db");
 
-const { getAll, getbyID, createNewEntry } = require("../domain/routerMethods");
+const {
+  getAll,
+  getbyID,
+  createNewEntry,
+  deleteEntry,
+} = require("../domain/routerMethods");
 
 router.get("/", async (req, res) => {
   getAll("pets", req, res);
@@ -14,6 +19,10 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   createNewEntry("pets", req, res);
+});
+
+router.delete("/:id", async (req, res) => {
+  deleteEntry("pets,req,res");
 });
 
 module.exports = router;

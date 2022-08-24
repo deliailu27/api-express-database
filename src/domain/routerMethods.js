@@ -44,4 +44,12 @@ async function createNewEntry(table, req, res) {
   res.status(201).json(newEntry);
 }
 
-module.exports = { getAll, getbyID, createNewEntry };
+async function deleteEntry(table, req, res) {
+  const entryToDeleteSql = `select * from ${table} where id =${req.params.id}`;
+  const sqlQuery = `delete from ${table} where id=${req.params.id}`;
+  const result = await db.query(entryToDeleteSql);
+  res.status(201).json(result.rows);
+  db.query(sqlQuery);
+}
+
+module.exports = { getAll, getbyID, createNewEntry, deleteEntry };
