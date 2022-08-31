@@ -52,4 +52,19 @@ async function deleteEntry(table, req, res) {
   db.query(sqlQuery);
 }
 
-module.exports = { getAll, getbyID, createNewEntry, deleteEntry };
+async function updateEntry(table, req, res) {
+  let sqlQuery = `update ${table} set `;
+  for (const key in req.body) {
+    sqlQuery += `${key}="${req.body[key]}",`;
+  }
+
+  sqlQuery = sqlQuery.slice(0, -1) + ` where id=${req.params.id}`;
+  console.log(sqlQuery);
+  db.query(sqlQuery);
+  const entryToUpdateSql = `select * from ${table} where id =${req.params.id}`;
+  console.log(req.body);
+  const result = await db.query(entryToUpdateSql);
+  res.status(201).json(result.rows);
+}
+
+module.exports = { getAll, getbyID, createNewEntry, deleteEntry, updateEntry };

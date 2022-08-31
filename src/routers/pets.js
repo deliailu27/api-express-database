@@ -7,6 +7,7 @@ const {
   getbyID,
   createNewEntry,
   deleteEntry,
+  updateEntry,
 } = require("../domain/routerMethods");
 
 router.get("/", async (req, res) => {
@@ -24,5 +25,7 @@ router.post("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   deleteEntry("pets,req,res");
 });
+
+router.put("/:id", async (req, res) => updateEntry("pets", req, res));
 
 module.exports = router;
